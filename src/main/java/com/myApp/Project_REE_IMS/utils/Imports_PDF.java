@@ -122,10 +122,10 @@ public class Imports_PDF {
 
 
             Registration_Info.addCell(new Cell()
-                    .add(new Paragraph(String.valueOf(exporter.getFeePaid()))
+                    .add(new Paragraph(String.valueOf(exporter.getFeePaid())))
                     .setVerticalAlignment(VerticalAlignment.MIDDLE)
                     .setTextAlignment(TextAlignment.LEFT)
-                    .setBorder(new SolidBorder(1.3f))));
+                    .setBorder(new SolidBorder(1.3f)));
 
 
             document.add(Registration_Info);
@@ -175,11 +175,8 @@ public class Imports_PDF {
             int sr = 1;
             for(Items_Details item : items) {
                 Items_Info.addCell(new Cell()
-                        .add(new Paragraph(String.valueOf(sr++))
-                        .setFontSize(7.8f)
-                        .setVerticalAlignment(VerticalAlignment.MIDDLE)
-                        .setTextAlignment(TextAlignment.LEFT)
-                        .setBorder(new SolidBorder(1.3f))));
+                        .add(new Paragraph(String.valueOf(sr++)))
+                        .addStyle(valueStyle));
 
                 addItems(Items_Info, valueStyle, item.getHsCodeDescription());
                 addItems(Items_Info, valueStyle, item.getISCode());

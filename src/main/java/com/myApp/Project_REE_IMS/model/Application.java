@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Entity
-@Table(name = "application")
+@Table(name = "application", schema = "exim")
 @Data
 public class Application {
 

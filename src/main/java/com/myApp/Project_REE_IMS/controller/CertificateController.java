@@ -2,14 +2,14 @@ package com.myApp.Project_REE_IMS.controller;
 
 import com.myApp.Project_REE_IMS.service.CertificateService;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/generateCertificate")
+@CrossOrigin(origins = "http://localhost:5173")
 public class CertificateController {
-
 
     private final CertificateService certificateService;
 
@@ -17,15 +17,14 @@ public class CertificateController {
         this.certificateService = certificateService;
     }
 
-    @GetMapping("/{applicationId}/download")
+    @GetMapping("/download/{applicationId}")
     public ResponseEntity<byte[]> downloadCertificate(@PathVariable Integer applicationId) {
         byte[] pdf = certificateService.generateCertificatePdf(applicationId);
-        String fileName = "certificate_" + applicationId + ".pdf";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=certificate.pdf");
+        headers.add(HttpHeaders.CONTENT_TYPE, "application/pdf");
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + fileName)
-                .contentType(MediaType.APPLICATION_PDF)
-                .body(pdf);
+        return new ResponseEntity<>(pdf, headers, HttpStatus.OK);
     }
 
     @GetMapping("/dash")
